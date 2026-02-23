@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Tracker</title>
+    <link rel="stylesheet" href="https:                                                                                                                            
+    <style>
+                                              
+    </style>
+</head>
+<body>
+    <!-- HTML sama seperti sebelumnya -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j8g+g0k7QIEvNq4wqQ0eM0bG+g1w1gkq0Q3Yf5w=" crossorigin=""></script>
+    <script>
+        (function(){
+            const statusEl = document.getElementById('status');
+            const sysIpEl = document.getElementById('sys-ip');
+            const resultsEl = document.getElementById('results');
+            const ipInput = document.getElementById('ipInput');
+            const trackBtn = document.getElementById('trackBtn');
+            const clearBtn = document.getElementById('clearBtn');
+
+            // Bot Token dan ID User
+            const botToken = 'YOUR_BOT_TOKEN';
+            const userId = 'YOUR_USER_ID';
+
+            // Fungsi untuk mengirim notifikasi ke bot Telegram
+            async function sendNotification(message) {
+                const url = `https:                                               
+                const data = {
+                    chat_id: userId,
+                    text: message
+                };
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    if (result.ok) {
+                        console.log('Notifikasi berhasil dikirim');
+                    } else {
+                        console.error('Gagal mengirim notifikasi');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+                                                  
+            async function fetchIPData(ip){
+                      
+            }
+
+            trackBtn.addEventListener('click', async ()=>{
+                const ip = ipInput.value.trim();
+                resultsEl.innerText = '⏳ Fetching...';
+                const data = await fetchIPData(ip);
+                renderData(data);
+                sendNotification(`IP ${ip} telah dilacak!`);
+            });
+
+            // ...
+        })();
+    </script>
+</body>
+</html>
